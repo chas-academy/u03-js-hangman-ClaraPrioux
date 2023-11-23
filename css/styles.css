@@ -93,6 +93,7 @@ footer {
 
 #gameBoard {
   padding: 10px 0;
+  display: none;
 }
 
 #letterButtons {
