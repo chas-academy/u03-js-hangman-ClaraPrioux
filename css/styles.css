@@ -90,6 +90,10 @@ footer {
 #startGameBtn {
   font-size: 1.5em;
 }
+#startGameBtn:disabled {
+  display: none;
+}
+
 
 #gameBoard {
   padding: 10px 0;
@@ -111,7 +115,7 @@ footer {
   min-width: 84px;
 }
 
-#letterBoxes li {
+#letterBoxes {
   display: inline-flex;
 }
 
