@@ -61,18 +61,38 @@ function createLetterBoxes() {
 // When click on a letter button => event
 const button = document.querySelector("#letterButtons");
 
-button.addEventListener("click", (event) => {
-    const buttonValue = event.target.value;
-    compareLetters(buttonValue);
+letterButtons.addEventListener("click", (event) => {
+    const clickedElement = event.target; // to focus on one letter only
+
+    if (clickedElement.tagName === 'BUTTON') {
+        const buttonValue = clickedElement.value; // to focus on the value of the letter
+        compareLetters(buttonValue);
+        clickedElement.disabled = true; // Disable the clicked button
+    }
 });
 
 // function that compare the letter selected with the letters from the wordToGuess
+
 function compareLetters(buttonValue) {
     for (let i = 0; i < wordToGuess.length; i++) {
-        if (buttonValue == wordToGuess[i].toUpperCase()) {
-            console.log(`Button value ${buttonValue} matches letter ${wordToGuess[i]}`);
+        // if the (swedish) letter clicked and some (swedish) letters in the word match
+        if (buttonValue.toLocaleUpperCase('sv-SE') === wordToGuess[i].toLocaleUpperCase('sv-SE')) {
+            // then display this (or these) letter(s) in letterBoxes children input
+            letterBoxes.children[i].value = buttonValue;
         }
     }
-} 
+    a();
+}
 
-// Next step to display it in the boxes
+// max 5 guesses, I first tested it on the letterButtons id, but it disturbs the "clickedElement.disabled" so I tried with "btn--stripe" and its
+let counter = 1;
+
+function a(){
+    if(counter >= 5) {
+        document.getElementsByClassName("btn--stripe");
+        console.log("STOP");
+    }
+    document.getElementsByClassName("btn--stripe").innerHTML += "";
+
+    counter++
+}
