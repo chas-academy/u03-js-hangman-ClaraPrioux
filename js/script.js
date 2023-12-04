@@ -4,6 +4,7 @@
 let wordToGuess;    // Sträng: ett av orden valt av en slumpgenerator från arrayen ovan
 
 let guesses = 0;     // Number: håller antalet gissningar som gjorts
+let incorrectGuessCounter = 0;
 let hangmanImg;      // Sträng: sökväg till bild som kommer visas (och ändras) fel svar. t.ex. `/images/h1.png`
 
 let msgHolderEl;     // DOM-nod: Ger meddelande när spelet är över
@@ -34,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Show the gameBoard section
         gameBoard.style.display = 'block';
         wordToGuess = generateRandomWord();
+        console.log(wordToGuess);
         createLetterBoxes(wordToGuess);
         this.disabled = true;
         // console.log(generateRandomWord());
@@ -74,25 +76,37 @@ letterButtons.addEventListener("click", (event) => {
 // function that compare the letter selected with the letters from the wordToGuess
 
 function compareLetters(buttonValue) {
+    let foundMatch = false;
+
     for (let i = 0; i < wordToGuess.length; i++) {
         // if the (swedish) letter clicked and some (swedish) letters in the word match
         if (buttonValue.toLocaleUpperCase('sv-SE') === wordToGuess[i].toLocaleUpperCase('sv-SE')) {
             // then display this (or these) letter(s) in letterBoxes children input
             letterBoxes.children[i].value = buttonValue;
+            // so it correct, we found a match
+            foundMatch = true;
+            // isTheWordCompleted(wordToGuess);
+        } 
+    }
+    // but if we didn't find a match
+    if (!foundMatch) {
+        // add one to the incorrect guesses counter
+        incorrectGuessCounter++;
+        // the game has to stop if the counter is >= 5
+        if (incorrectGuessCounter >= 5) {
+            alert("You Lost!");
         }
     }
-    a();
 }
+// if we found all the correct letters
 
-// max 5 guesses, I first tested it on the letterButtons id, but it disturbs the "clickedElement.disabled" so I tried with "btn--stripe" and its
-let counter = 1;
+// function isTheWordCompleted(letterBoxes){
+//     let everythingFilled = false;
 
-function a(){
-    if(counter >= 5) {
-        document.getElementsByClassName("btn--stripe");
-        console.log("STOP");
-    }
-    document.getElementsByClassName("btn--stripe").innerHTML += "";
-
-    counter++
-}
+//     for (let i = 0; i < letterBoxes.length; i++) {
+//         const box = letterBoxes[i].input;
+//         if (box == '') {
+//             true;
+//         }
+//     }
+    
