@@ -24,7 +24,6 @@ let letterBoxEls;    // Array av DOM-noder: Rutorna där bokstäverna ska stå
 // console.log(pickUp());
 
 // Funktion som startar spelet vid knapptryckning, och då tillkallas andra funktioner
-
 const wordList = ["Elefant", "Ugglor", "Fåtölj", "Ballong", "Fönster", "Mamma", "Papper", "Frukost", "Skratta", "Sköldpadda"];
 document.addEventListener('DOMContentLoaded', function () {
     const startGameBtn = document.getElementById('startGameBtn');// DOM-nod: knappen som du startar spelet med
@@ -86,27 +85,72 @@ function compareLetters(buttonValue) {
             // so it correct, we found a match
             foundMatch = true;
             // isTheWordCompleted(wordToGuess);
-        } 
+        }
     }
     // but if we didn't find a match
     if (!foundMatch) {
         // add one to the incorrect guesses counter
         incorrectGuessCounter++;
+        if (incorrectGuessCounter == 6) {
+            let hangmanImg = document.createElement("img");
+            hangmanImg.setAttribute("src", "images/h6.png");
+            document.getElementById("hangman").appendChild(hangmanImg);
+            } else if (incorrectGuessCounter == 5) {
+            let hangmanImg = document.createElement("img");
+            hangmanImg.setAttribute("src", "images/h5.png");
+            document.getElementById("hangman").appendChild(hangmanImg);
+            } else if (incorrectGuessCounter == 4) {
+            let hangmanImg = document.createElement("img");
+            hangmanImg.setAttribute("src", "images/h4.png");
+            document.getElementById("hangman").appendChild(hangmanImg);
+            } else if (incorrectGuessCounter == 3) {
+            let hangmanImg = document.createElement("img");
+            hangmanImg.setAttribute("src", "images/h3.png");
+            document.getElementById("hangman").appendChild(hangmanImg);
+            } else if (incorrectGuessCounter == 2) {
+            let hangmanImg = document.createElement("img");
+            hangmanImg.setAttribute("src", "images/h2.png");
+            document.getElementById("hangman").appendChild(hangmanImg);
+            } else if (incorrectGuessCounter == 1) {
+            let hangmanImg = document.createElement("img");
+            hangmanImg.setAttribute("src", "images/h1.png");
+            document.getElementById("hangman").appendChild(hangmanImg);
+            } else if (incorrectGuessCounter == 0) {
+            let hangmanImg = document.createElement("img");
+            hangmanImg.setAttribute("src", "images/h0.png");
+            document.getElementById("hangman").appendChild(hangmanImg);
+            }
         // the game has to stop if the counter is >= 5
-        if (incorrectGuessCounter >= 5) {
-            alert("You Lost!");
+        updateHangmanImage(incorrectGuessCounter);
+        if (incorrectGuessCounter >= 6) {
+            document.getElementById('message').innerHTML = 'You lost!';
         }
+        function updateHangmanImage(counter) {
+            // Remove any existing child elements (previous hangman images)
+            document.getElementById("hangman").innerHTML = "";
+        
+            // Create a new hangman image element
+            let hangmanImg = document.createElement("img");
+            hangmanImg.setAttribute("src", `images/h${counter}.png`);
+        
+            // Append the new hangman image to the hangman container
+            document.getElementById("hangman").appendChild(hangmanImg);
+        }
+    }
+    if (areAllLetterBoxesFilled()) {
+        alert("Congratulations! You've guessed the word!");
     }
 }
 // if we found all the correct letters
 
-// function isTheWordCompleted(letterBoxes){
-//     let everythingFilled = false;
+function areAllLetterBoxesFilled() {
+    let letterBoxes = document.getElementById("letterBoxes").children;
 
-//     for (let i = 0; i < letterBoxes.length; i++) {
-//         const box = letterBoxes[i].input;
-//         if (box == '') {
-//             true;
-//         }
-//     }
-    
+    for (let i = 0; i < letterBoxes.length; i++) {
+        if (letterBoxes[i].value.trim() === "") {
+            return false; // At least one letter box is empty
+        }
+    }
+
+    return true; // All letter boxes are filled
+}
