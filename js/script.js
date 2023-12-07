@@ -9,8 +9,10 @@ let hangmanImg;      // Sträng: sökväg till bild som kommer visas (och ändra
 
 let msgHolderEl;     // DOM-nod: Ger meddelande när spelet är över
 
-let letterButtonEls; // Array av DOM-noder: Knapparna för bokstäverna
-let letterBoxEls;    // Array av DOM-noder: Rutorna där bokstäverna ska stå
+ // Array av DOM-noder: Knapparna för bokstäverna
+    // Array av DOM-noder: Rutorna där bokstäverna ska stå
+const startGameBtn = document.getElementById('startGameBtn');// DOM-nod: knappen som du startar spelet med
+const gameBoard = document.getElementById('gameBoard');
 
 // Funktion som slumpar fram ett ord
 // Funktion som tar fram bokstävernas rutor, antal rutor beror på vilket ord slumptas fram
@@ -25,10 +27,8 @@ let letterBoxEls;    // Array av DOM-noder: Rutorna där bokstäverna ska stå
 
 // Funktion som startar spelet vid knapptryckning, och då tillkallas andra funktioner
 const wordList = ["Elefant", "Ugglor", "Fåtölj", "Ballong", "Fönster", "Mamma", "Papper", "Frukost", "Skratta", "Sköldpadda"];
-document.addEventListener('DOMContentLoaded', function () {
-    const startGameBtn = document.getElementById('startGameBtn');// DOM-nod: knappen som du startar spelet med
-    const gameBoard = document.getElementById('gameBoard');
-
+document.addEventListener('DOMContentLoaded', function (){
+    letterButtonEls = document.querySelectorAll('#letterButtons button');
     // Function to start the game
     function startGame() {
         // Show the gameBoard section
@@ -60,7 +60,7 @@ function createLetterBoxes() {
 }
 
 // When click on a letter button => event
-const button = document.querySelector("#letterButtons");
+const letterButtons = document.querySelector("#letterButtons");
 
 letterButtons.addEventListener("click", (event) => {
     const clickedElement = event.target; // to focus on one letter only
@@ -124,6 +124,7 @@ function compareLetters(buttonValue) {
         updateHangmanImage(incorrectGuessCounter);
         if (incorrectGuessCounter >= 6) {
             document.getElementById('message').innerHTML = 'You lost!';
+            disableAll();
         }
         function updateHangmanImage(counter) {
             // Remove any existing child elements (previous hangman images)
@@ -138,7 +139,7 @@ function compareLetters(buttonValue) {
         }
     }
     if (areAllLetterBoxesFilled()) {
-        alert("Congratulations! You've guessed the word!");
+        document.getElementById('message').innerHTML = 'You win!';
     }
 }
 // if we found all the correct letters
@@ -154,3 +155,46 @@ function areAllLetterBoxesFilled() {
 
     return true; // All letter boxes are filled
 }
+
+function restartGame() {
+    // Reset variables
+    guesses = 0;
+    incorrectGuessCounter = 0;
+    hangmanImg = "";
+
+    // Remove hangman image
+    document.getElementById("hangman").innerHTML = "";
+
+    // Enable all letter buttons
+    enableLetterButtons();
+
+    // Generate a new word
+    wordToGuess = generateRandomWord();
+    console.log(wordToGuess);
+
+    // Create new letter boxes
+    createLetterBoxes();
+
+    // Reset game state message
+    document.getElementById('message').innerHTML = '';
+}
+
+// Add event listener to the restart button
+const restartGameBtn = document.getElementById('restartGameBtn');
+restartGameBtn.addEventListener('click', restartGame);
+
+// Function to enable all letter buttons
+function enableLetterButtons() {
+    const buttons = Array.from(letterButtonEls);
+    for (let button of buttons) {
+        button.disabled = false;
+    }
+}
+
+function disableAll() {
+    const buttons = Array.from(letterButtonEls);
+    for (let button of buttons) {
+        button.disabled = true;
+    }
+}
+  
