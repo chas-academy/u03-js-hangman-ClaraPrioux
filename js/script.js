@@ -14,17 +14,6 @@ let msgHolderEl;     // DOM-nod: Ger meddelande när spelet är över
 const startGameBtn = document.getElementById('startGameBtn');// DOM-nod: knappen som du startar spelet med
 const gameBoard = document.getElementById('gameBoard');
 
-// Funktion som slumpar fram ett ord
-// Funktion som tar fram bokstävernas rutor, antal rutor beror på vilket ord slumptas fram
-// Funktion som körs när du trycker på bokstäverna och gissar bokstav
-// Funktion som ropas vid vinst eller förlust, gör olika saker beroende tillståndet
-// Funktion som inaktiverar/aktiverar bokstavsknapparna beroende på vilken del av spelet du är på
-
-// function pickUp() {
-//     return wordList[(Math.floor(Math.random() * wordList.length))];
-// }
-// console.log(pickUp());
-
 // Funktion som startar spelet vid knapptryckning, och då tillkallas andra funktioner
 const wordList = ["Elefant", "Ugglor", "Fåtölj", "Ballong", "Fönster", "Mamma", "Papper", "Frukost", "Skratta", "Sköldpadda"];
 document.addEventListener('DOMContentLoaded', function (){
