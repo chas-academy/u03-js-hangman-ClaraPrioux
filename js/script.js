@@ -1,5 +1,5 @@
 // Globala variabler
-
+let alphabet = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z", "å", "ä", "ö"];
  // Array: med spelets alla ord
 let wordToGuess;    // Sträng: ett av orden valt av en slumpgenerator från arrayen ovan
 
@@ -13,10 +13,12 @@ let msgHolderEl;     // DOM-nod: Ger meddelande när spelet är över
     // Array av DOM-noder: Rutorna där bokstäverna ska stå
 const startGameBtn = document.getElementById('startGameBtn');// DOM-nod: knappen som du startar spelet med
 const gameBoard = document.getElementById('gameBoard');
+const letterButtonsContainer = document.getElementById('letterButtons');
 
 // Funktion som startar spelet vid knapptryckning, och då tillkallas andra funktioner
 const wordList = ["Elefant", "Ugglor", "Fåtölj", "Ballong", "Fönster", "Mamma", "Papper", "Frukost", "Skratta", "Sköldpadda"];
 document.addEventListener('DOMContentLoaded', function (){
+    createLetterButtons();
     letterButtonEls = document.querySelectorAll('#letterButtons button');
     // Function to start the game
     function startGame() {
@@ -31,6 +33,26 @@ document.addEventListener('DOMContentLoaded', function (){
     // Attach the function to the button's click event
     startGameBtn.addEventListener('click', startGame);
 });
+
+function createLetterButtons() {
+    for (let i = 0; i < alphabet.length; i++) {
+        const button = document.createElement('button');
+        button.className = 'btn btn--stripe';
+        button.type = 'button';
+        button.value = alphabet[i];
+        button.textContent = alphabet[i];
+
+        // Attach a click event listener to each button
+        button.addEventListener('click', function () {
+            const buttonValue = this.value;
+            compareLetters(buttonValue);
+            this.disabled = true;
+        });
+
+        // Append the button to the container
+        letterButtonsContainer.appendChild(button);
+    }
+}
 
 // A function to generate the word randomly, that will be called by the startGame button 
 function generateRandomWord() {
@@ -48,89 +70,49 @@ function createLetterBoxes() {
       }
 }
 
-// When click on a letter button => event
-const letterButtons = document.querySelector("#letterButtons");
-
-letterButtons.addEventListener("click", (event) => {
-    const clickedElement = event.target; // to focus on one letter only
-
-    if (clickedElement.tagName === 'BUTTON') {
-        const buttonValue = clickedElement.value; // to focus on the value of the letter
-        compareLetters(buttonValue);
-        clickedElement.disabled = true; // Disable the clicked button
-    }
-});
-
 // function that compare the letter selected with the letters from the wordToGuess
 
 function compareLetters(buttonValue) {
     let foundMatch = false;
 
     for (let i = 0; i < wordToGuess.length; i++) {
-        // if the (swedish) letter clicked and some (swedish) letters in the word match
         if (buttonValue.toLocaleUpperCase('sv-SE') === wordToGuess[i].toLocaleUpperCase('sv-SE')) {
-            // then display this (or these) letter(s) in letterBoxes children input
             letterBoxes.children[i].value = buttonValue;
-            // so it correct, we found a match
             foundMatch = true;
-            // isTheWordCompleted(wordToGuess);
         }
     }
-    // but if we didn't find a match
+
+    // Check if the word is completed after each letter guess
+    if (areAllLetterBoxesFilled()) {
+        document.getElementById('message').innerHTML = 'You win!';
+        disableAll();
+        return;  // Stop further execution after winning
+    }
+
     if (!foundMatch) {
-        // add one to the incorrect guesses counter
         incorrectGuessCounter++;
-        if (incorrectGuessCounter == 6) {
-            let hangmanImg = document.createElement("img");
-            hangmanImg.setAttribute("src", "images/h6.png");
-            document.getElementById("hangman").appendChild(hangmanImg);
-            } else if (incorrectGuessCounter == 5) {
-            let hangmanImg = document.createElement("img");
-            hangmanImg.setAttribute("src", "images/h5.png");
-            document.getElementById("hangman").appendChild(hangmanImg);
-            } else if (incorrectGuessCounter == 4) {
-            let hangmanImg = document.createElement("img");
-            hangmanImg.setAttribute("src", "images/h4.png");
-            document.getElementById("hangman").appendChild(hangmanImg);
-            } else if (incorrectGuessCounter == 3) {
-            let hangmanImg = document.createElement("img");
-            hangmanImg.setAttribute("src", "images/h3.png");
-            document.getElementById("hangman").appendChild(hangmanImg);
-            } else if (incorrectGuessCounter == 2) {
-            let hangmanImg = document.createElement("img");
-            hangmanImg.setAttribute("src", "images/h2.png");
-            document.getElementById("hangman").appendChild(hangmanImg);
-            } else if (incorrectGuessCounter == 1) {
-            let hangmanImg = document.createElement("img");
-            hangmanImg.setAttribute("src", "images/h1.png");
-            document.getElementById("hangman").appendChild(hangmanImg);
-            } else if (incorrectGuessCounter == 0) {
-            let hangmanImg = document.createElement("img");
-            hangmanImg.setAttribute("src", "images/h0.png");
-            document.getElementById("hangman").appendChild(hangmanImg);
-            }
-        // the game has to stop if the counter is >= 5
         updateHangmanImage(incorrectGuessCounter);
+
+        // Check if the player has lost after processing all incorrect guesses
         if (incorrectGuessCounter >= 6) {
             document.getElementById('message').innerHTML = 'You lost!';
             disableAll();
         }
-        function updateHangmanImage(counter) {
-            // Remove any existing child elements (previous hangman images)
-            document.getElementById("hangman").innerHTML = "";
-        
-            // Create a new hangman image element
-            let hangmanImg = document.createElement("img");
-            hangmanImg.setAttribute("src", `images/h${counter}.png`);
-        
-            // Append the new hangman image to the hangman container
-            document.getElementById("hangman").appendChild(hangmanImg);
-        }
-    }
-    if (areAllLetterBoxesFilled()) {
-        document.getElementById('message').innerHTML = 'You win!';
     }
 }
+
+function updateHangmanImage(counter) {
+    // Remove any existing child elements (previous hangman images)
+    document.getElementById("hangman").innerHTML = "";
+
+    // Create a new hangman image element
+    let hangmanImg = document.createElement("img");
+    hangmanImg.setAttribute("src", `images/h${counter}.png`);
+
+    // Append the new hangman image to the hangman container
+    document.getElementById("hangman").appendChild(hangmanImg);
+}
+
 // if we found all the correct letters
 
 function areAllLetterBoxesFilled() {
