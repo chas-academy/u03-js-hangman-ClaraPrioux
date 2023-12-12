@@ -13,10 +13,13 @@ body {
   flex-direction: column;
   height: 100%;
   min-height: 100vh;
+  background-image: url("/images/background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 header {
-  background-color: silver;
+  background-color: #e1d1c2;
   color: #fff;
   -webkit-box-flex: 0;
   -webkit-flex: none;
@@ -32,13 +35,32 @@ header h1 {
 
 main {
   flex: 1;
-  padding: 1.5em;
+  padding: 8% 20% 8% 20%;
+}
+
+h2 {
+  text-align: center;
+  padding-top: 7%;
+  padding-bottom: 3%;
+  font-size: 40px;
+}
+
+p {
+  text-align: center;
+  padding-bottom: 1%;
+  font-size: 20px;
 }
 
 /* ---------- Start Game button design ---------- */
 
 #startGameBtn {
-  font-size: 1.5em;
+  margin-top: 10%;
+  padding: 5%;
+  font-size: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 #startGameBtn:disabled {
   display: none;
@@ -47,7 +69,7 @@ main {
 /* ---------- Game Board design ---------- */
 
 #gameBoard {
-  padding: 10px 0;
+  padding-top: 10px;
   display: none;
 }
 
@@ -57,7 +79,7 @@ main {
   display: inline-flex;
   list-style-type: none;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 
@@ -158,7 +180,22 @@ main {
   border-top: 1px solid #000;
 }
 
+/* ---------- Restart Game button design ---------- */
+
+#restartGameBtn {
+  margin: 3% 30% 0 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+}
+
 /* ---------- letterBoxes design ---------- */
+
+#letterBoxes {
+  display: flex;
+  justify-content: center;
+}
 
 #letterBoxes input {
   border: 1px solid #666;
@@ -166,29 +203,76 @@ main {
   font-size: 1.5em;
   font-weight: bold;
   line-height: 2em;
-  margin-top: 1em;
   padding: 20px 5px;
-  text-align: center;
+  margin: 4% 0% 4% 0%;
   width: 2em;
+  text-align: center;
+}
+
+/* ---------- Images design ---------- */
+
+#hangman,
+#happy {
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    margin-right: 10px;
 }
 
 /* ---------- message design ---------- */
 
 #message {
   padding-top: 20px;
-  font-size: 1.5em;
+  font-size: 60px;
+  text-align: center;
 }
 
 /* ---------- footer design ---------- */
 
 footer {
-  background-color: silver;
+  background-color: #e1d1c2;
   border-top: 1px solid #666;
   margin-top: 20px;
-  padding-top: 30px;
+  padding: 15px;
   color: #fff;
   font-size: 1.25em;
   width: 100%;
   flex: none;
   text-align: center;
+}
+
+/* -------------- Mobile Responsivity -------------- */
+
+@media only screen and (max-width: 800px) {
+  header h1 {
+    font-size: 20px;
+  }
+  h2 {
+    font-size: 20px;
+  }
+  p {
+    font-size: 10px;
+  }
+  main {
+    padding: 30% 8% 6% 8%;
+  }
+  #startGameBtn {
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  .btn {
+    padding: 8px 18px 11px;
+  }
+  #letterButtons button:not(last-child) {
+    min-width: 0;
+  }
+  #letterBoxes input {
+    padding: 8px 0;
+    margin: 4% 0% 4% 0%;
+    width: 1.5em;
+    text-align: center;
+  }
 }
