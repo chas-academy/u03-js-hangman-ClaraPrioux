@@ -4,15 +4,15 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 body {
-  color: #666;
-  font-family: sans-serif;
+  color: #c2888c;
   display: flex;
   flex-direction: column;
   height: 100%;
-  min-height: 100vh;
+  min-height: calc(100vh - 60px);
   background-image: url("/images/background.jpg");
   background-repeat: no-repeat;
   background-size: cover;
@@ -21,10 +21,6 @@ body {
 header {
   background-color: #e1d1c2;
   color: #fff;
-  -webkit-box-flex: 0;
-  -webkit-flex: none;
-  -ms-flex: none;
-  flex: none;
 }
 
 header h1 {
@@ -48,7 +44,7 @@ h2 {
 p {
   text-align: center;
   padding-bottom: 1%;
-  font-size: 20px;
+  font-size: 25px;
 }
 
 /* ---------- Start Game button design ---------- */
@@ -73,6 +69,10 @@ p {
   display: none;
 }
 
+#hint {
+  padding: 16px;
+}
+
 /* ---------- letterButtons design ---------- */
 
 #letterButtons {
@@ -91,93 +91,22 @@ p {
 }
 
 .btn {
-  -moz-user-select: text;
-  background-color: #fff;
-  background: transparent;
   border-radius: 6px;
-  border: 0;
-  border: 2px solid #666;
-  color: #666;
+  border: 2px solid #a48176;
+  color: #a48176;
   cursor: pointer;
-  display: block;
-  font: inherit;
-  line-height: normal;
   margin-bottom: 16px;
-  margin: 0;
-  overflow: visible;
-  padding: 0;
-  padding: 16px 36px 22px;
-  text-decoration: none;
-  text-transform: uppercase;
-}
-
-.btn::-moz-focus-inner {
-  padding: 0;
-  border: 0;
-}
-
-.btn--stripe {
-  overflow: hidden;
-  position: relative;
-}
-
-.btn--stripe:after {
-  content: "";
-  display: block;
-  height: 7px;
-  width: 100%;
-  background-image: -webkit-repeating-linear-gradient(
-    45deg,
-    #666,
-    #666 1px,
-    transparent 2px,
-    transparent 5px
-  );
-  background-image: repeating-linear-gradient(
-    45deg,
-    #666,
-    #666 1px,
-    transparent 2px,
-    transparent 5px
-  );
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  border-top: 1px solid #666;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  background-size: 7px 7px;
+  padding: 16px 0 16px 0;
+  font-size: 25px;
+  background-color: #f3edef;
 }
 
 .btn--stripe:disabled {
-  background-color: #999;
-  color: #fff;
-  border-color: #666;
+  background-color: #a48176;
 }
 
-.btn--stripe:hover {
-  background-color: #666;
-  color: #fff;
-  border-color: #000;
-}
-
-.btn--stripe:disabled:after,
-.btn--stripe:hover:after {
-  background-image: -webkit-repeating-linear-gradient(
-    45deg,
-    #fff,
-    #fff 1px,
-    transparent 2px,
-    transparent 5px
-  );
-  background-image: repeating-linear-gradient(
-    45deg,
-    #fff,
-    #fff 1px,
-    transparent 2px,
-    transparent 5px
-  );
-  border-top: 1px solid #000;
+.btn:hover {
+  background-color: #e1d1c2;
 }
 
 /* ---------- Restart Game button design ---------- */
@@ -198,25 +127,28 @@ p {
 }
 
 #letterBoxes input {
-  border: 1px solid #666;
-  color: #666;
+  border: 1px solid #c2888c;
+  border-radius: 6px;
+  color: #a48176;
   font-size: 1.5em;
   font-weight: bold;
   line-height: 2em;
   padding: 20px 5px;
-  margin: 4% 0% 4% 0%;
+  margin: 1% 1% 1% 1%;
   width: 2em;
   text-align: center;
 }
 
 /* ---------- Images design ---------- */
 
-#hangman,
+img {
+    width: 60%;
+    color: #c2888c;
+}
+
+#hangman, 
 #happy {
-    width: 50px;
-    height: 50px;
-    display: inline-block;
-    margin-right: 10px;
+  display: inline-block;
 }
 
 /* ---------- message design ---------- */
@@ -231,7 +163,7 @@ p {
 
 footer {
   background-color: #e1d1c2;
-  border-top: 1px solid #666;
+  border-top: 1px solid #a48176;
   margin-top: 20px;
   padding: 15px;
   color: #fff;
@@ -239,6 +171,9 @@ footer {
   width: 100%;
   flex: none;
   text-align: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
 }
 
 /* -------------- Mobile Responsivity -------------- */
@@ -247,14 +182,19 @@ footer {
   header h1 {
     font-size: 20px;
   }
+  body {
+    background-image: url(/images/background-mobile.jpg);
+    background-position: center;
+  }
   h2 {
     font-size: 20px;
   }
   p {
     font-size: 10px;
+    padding-bottom: 5%;
   }
   main {
-    padding: 30% 8% 6% 8%;
+    padding: 5% 8% 6% 8%;
   }
   #startGameBtn {
     font-size: 30px;
@@ -262,6 +202,14 @@ footer {
     justify-content: center;
     align-items: center;
     width: 100%;
+  }
+  #hint {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+    font-size: 16px;
+    padding: 8px;
   }
   .btn {
     padding: 8px 18px 11px;
@@ -274,5 +222,18 @@ footer {
     margin: 4% 0% 4% 0%;
     width: 1.5em;
     text-align: center;
+  }
+  #restartGameBtn {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 15%;
+    width: 60%;
+  }
+  img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
   }
 }

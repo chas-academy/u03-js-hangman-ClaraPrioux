@@ -17,9 +17,9 @@
         <section>
             <article>
                 <h2>HÄMGA GUBBE</h2>
-                <p>När du trycker på starta spelet, kommer datorn att välja ett ord slumpmässigt. <br />
-                    Det kommer då dyka upp ett visst antal fält som motsvarar antalet bokstäver i ordet. <br />
-                    Ditt mål är att gissa ordet genom att trycka på bokstavsknapparna.<br />
+                <p>När du trycker på starta spelet, kommer datorn att välja ett ord slumpmässigt. <br>
+                    Det kommer då dyka upp ett visst antal fält som motsvarar antalet bokstäver i ordet. <br>
+                    Ditt mål är att gissa ordet genom att trycka på bokstavsknapparna.<br>
                     För varje bokstav du gissar rätt, så fylls dyker det upp en bokstav i på den plats som
                     bokstaven du gissade på motsvarar i ordet.
                 </p>
@@ -29,7 +29,7 @@
         <button class="btn btn--stripe" type="button" id="startGameBtn">Starta spelet</button>
 
         <section id="gameBoard">
-
+            <button class="btn btn--stripe" type="button" id="hint">HINT</button>
             <article id="letterBoxes">
                 <!-- This is where the matched letters should appear, these should match the number of letters in the selected word -->
             </article>
@@ -39,8 +39,9 @@
             <section id="message">
                 <!-- This is where messages should appear -->
             </section>
+            <div id="happy" src="" alt="happy"></div>
+            <div id="hangman" src="" alt="hangman"></div>
             <button class="btn btn--stripe" type="button" id="restartGameBtn">Starta om spelet</button>
-            <div id="hangman" src="" alt="hangman"></div><div id="happy" src="" alt="happy"></div>
         </section>
     </main>
 
@@ -48,7 +49,7 @@
         Chas Academy - Hangman
     </footer>
 
-    <script type="text/javascript" src="js/script.js"></script>
+    <script src="js/script.js"></script>
 </body>
 
 </html>
